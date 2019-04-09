@@ -20,8 +20,14 @@
   version = "v1.2.4"
 
 [[projects]]
+  name = "github.com/gorilla/websocket"
+  packages = ["."]
+  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
+  version = "v1.4.0"
+
+[[projects]]
   name = "github.com/shirou/gopsutil"
-  packages = ["internal/common","mem"]
+  packages = ["cpu","internal/common","mem"]
   revision = "2cbc9195c892b304060269ef280375236d2fcac9"
   version = "v2.19.03"
 
@@ -34,6 +40,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "976af924ca1831e00ff545cef5a583027fe6e460daadb410da704c776901bab0"
+  inputs-digest = "8e744f87d260d4541d8ffd0482e13d68a0c1ff76b4c5a972d90bede6879a79ba"
   solver-name = "gps-cdcl"
   solver-version = 1
