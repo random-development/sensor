@@ -1,7 +1,15 @@
-run: 
+run:
 	go run cmd/main.go
 
-build: 
+build:
 	go build -o sensor cmd/main.go
 
-.PHONY: run build
+test: mocks
+	go test -v ./internal
+
+mocks:
+	@ echo -- Generating mocks
+	mkdir -p mocks
+	go generate ./internal
+
+.PHONY: run build test mocks

@@ -1,5 +1,7 @@
 package internal
 
+//go:generate mockgen -destination=../mocks/websocket_publisher_mock.go -package=mocks github.com/random-development/sensor/internal Dialer,Conn
+
 import (
 	"fmt"
 	"net/http"
@@ -34,9 +36,6 @@ type WebSocketConn struct {
 
 // MakeWebSocketPublisher builds WebSocketPublisher
 func MakeWebSocketPublisher(metric, url string, dialer Dialer) WebSocketPublisher {
-	// conn, resp, err := websocket.DefaultDialer.Dial(url, nil)
-	// if err != nil {
-	// }
 	conn, _, err := dialer.Dial(url, nil)
 	if err != nil {
 		fmt.Printf("Error dialing to %s: %v", url, err)
