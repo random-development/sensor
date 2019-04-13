@@ -18,7 +18,7 @@ func TestCollectorRun(t *testing.T) {
 
 	m := internal.Measurement{}
 	r := "resource"
-	probe.EXPECT().Resource().AnyTimes().Return(r)
+	probe.EXPECT().MetricName().AnyTimes().Return(r)
 	probe.EXPECT().Measure().Times(5).Return(m, nil)
 	broker.EXPECT().Pub(m, r).Times(5)
 

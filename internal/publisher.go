@@ -17,7 +17,7 @@ func RunPublisher(topic string, p Publisher, b Broker, done chan struct{}) {
 	measCh := b.Sub(topic)
 	l := log.WithFields(logrus.Fields{
 		"publisher": reflect.TypeOf(p).Name(),
-		"resource":  topic,
+		"metric":    topic,
 	})
 	go func() {
 		l.Info("Started")

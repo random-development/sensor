@@ -21,13 +21,13 @@ func MakeCollector(p Probe, broker Broker) Collector {
 // Run starts a goroutine collecting measurements
 func (c *Collector) Run(interval time.Duration) {
 	go func() {
-		log.Infof("Starting %s collector", c.probe.Resource())
+		log.Infof("Starting %s collector", c.probe.MetricName())
 		for range time.Tick(interval) {
 			m, err := c.probe.Measure()
 			if err != nil {
-				log.Warnf("Failed to collect %s", c.probe.Resource())
+				log.Warnf("Failed to collect %s", c.probe.MetricName()())
 			}
-			c.broker.Pub(m, c.probe.Resource())
+			c.broker.Pub(m, c.probe.MetricName())
 			log.Debugf("Sent measurement to broker: %s", m.String())
 		}
 	}()
