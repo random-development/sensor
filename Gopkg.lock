@@ -14,22 +14,40 @@
   version = "v1.0.2"
 
 [[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
+
+[[projects]]
   name = "github.com/go-ole/go-ole"
   packages = [".","oleutil"]
   revision = "97b6244175ae18ea6eef668034fd6565847501c9"
   version = "v1.2.4"
 
 [[projects]]
-  name = "github.com/gorilla/websocket"
-  packages = ["."]
-  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
-  version = "v1.4.0"
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  revision = "51421b967af1f557f93a59e0057aaf15ca02e29c"
+  version = "v1.2.0"
+
+[[projects]]
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/shirou/gopsutil"
   packages = ["cpu","internal/common","mem"]
   revision = "2cbc9195c892b304060269ef280375236d2fcac9"
   version = "v2.19.03"
+
+[[projects]]
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
   branch = "master"
@@ -40,6 +58,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8e744f87d260d4541d8ffd0482e13d68a0c1ff76b4c5a972d90bede6879a79ba"
+  inputs-digest = "746781fc5b34e39bd59dd13da9cdfb954c219088a884439fab37f9912a17808b"
   solver-name = "gps-cdcl"
   solver-version = 1
