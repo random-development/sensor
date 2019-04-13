@@ -32,6 +32,12 @@
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/gorilla/websocket"
+  packages = ["."]
+  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
+  version = "v1.4.0"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -45,7 +51,7 @@
 
 [[projects]]
   name = "github.com/stretchr/testify"
-  packages = ["assert"]
+  packages = ["assert","require","suite"]
   revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
   version = "v1.3.0"
 
@@ -58,6 +64,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "746781fc5b34e39bd59dd13da9cdfb954c219088a884439fab37f9912a17808b"
+  inputs-digest = "89e6aa59dad123f1dedd0f6079f704ae20b094970af36fb7da3d95525c3cd14a"
   solver-name = "gps-cdcl"
   solver-version = 1
