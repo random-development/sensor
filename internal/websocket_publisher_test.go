@@ -17,8 +17,6 @@ type WebSocketPublisherTestSuite struct {
 	mockCtrl *gomock.Controller
 	dialer   *mocks.MockDialer
 	conn     *mocks.MockConn
-	ch       chan interface{}
-	done     chan bool
 
 	topic string
 	url   string
@@ -26,37 +24,32 @@ type WebSocketPublisherTestSuite struct {
 
 func (suite *WebSocketPublisherTestSuite) SetupTest() {
 	suite.mockCtrl = gomock.NewController(suite.T())
-	suite.done = make(chan bool)
-	suite.topic = "topic"
 	suite.url = "ws://websocket/endpoint"
 	suite.sut = buildPublisher(suite)
-	suite.sut.Run(suite.done)
 }
 
 func buildPublisher(suite *WebSocketPublisherTestSuite) internal.WebSocketPublisher {
 	suite.dialer = mocks.NewMockDialer(suite.mockCtrl)
 	suite.conn = mocks.NewMockConn(suite.mockCtrl)
-	suite.ch = make(chan interface{})
 
 	suite.dialer.EXPECT().
 		Dial(suite.url, nil).
 		Times(1).
 		Return(suite.conn, nil, nil)
 
-	pub, err := internal.MakeWebSocketPublisher(suite.topic, suite.url, suite.dialer, suite.ch)
+	pub, err := internal.MakeWebSocketPublisher(suite.url, suite.dialer)
 	assert.NoError(suite.T(), err)
 	return pub
 }
 
 func (suite *WebSocketPublisherTestSuite) TearDownTest() {
-	suite.done <- true
 	suite.mockCtrl.Finish()
 }
 
-func (suite *WebSocketPublisherTestSuite) Test_WhenReceiveMeasurement_ShouldPublish() {
+func (suite *WebSocketPublisherTestSuite) Test_PublishCalled_ShouldWriteJsonToConnection() {
 	meas := internal.Measurement{Resource: suite.topic, Time: 1, Value: 1.0}
 	suite.conn.EXPECT().WriteJSON(meas).Return(nil)
-	suite.ch <- meas
+	suite.sut.Publish(meas)
 }
 
 func TestMakeWebSocketPublisher(t *testing.T) {
