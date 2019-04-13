@@ -13,13 +13,13 @@ type Measurement struct {
 }
 
 // NewMeasurement creates measurement with current time
-func NewMeasurement(resource string, value float64) *Measurement {
-	return &Measurement{
+func NewMeasurement(resource string, value float64) Measurement {
+	return Measurement{
 		Resource: resource,
 		Time:     time.Now().UTC().Unix(),
 		Value:    value}
 }
 
-func (m *Measurement) String() string {
+func (m Measurement) String() string {
 	return fmt.Sprintf("[%d]: %s=%f", m.Time, m.Resource, m.Value)
 }

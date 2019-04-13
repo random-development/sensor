@@ -27,7 +27,7 @@ func (c *Collector) Run(interval time.Duration) {
 			if err != nil {
 				log.Warnf("Failed to collect %s", c.probe.Resource())
 			}
-			c.broker.Pub(*m, c.probe.Resource())
+			c.broker.Pub(m, c.probe.Resource())
 			log.Debugf("Sent measurement to broker: %s", m.String())
 		}
 	}()

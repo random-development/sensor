@@ -10,7 +10,7 @@ import (
 // Probe is
 type Probe interface {
 	Resource() string
-	Measure() (*Measurement, error)
+	Measure() (Measurement, error)
 }
 
 // MemProbe allows to measure memory usage
@@ -20,10 +20,10 @@ type MemProbe struct{}
 func (p MemProbe) Resource() string { return "memory" }
 
 // Measure is used to collect one measurement
-func (p MemProbe) Measure() (*Measurement, error) {
+func (p MemProbe) Measure() (Measurement, error) {
 	v, err := mem.VirtualMemory()
 	if err != nil {
-		return nil, err
+		return Measurement{}, err
 	}
 	return NewMeasurement(p.Resource(), v.UsedPercent), nil
 }
@@ -35,10 +35,10 @@ type CPUProbe struct{}
 func (p CPUProbe) Resource() string { return "cpu" }
 
 // Measure is used to collect one measurement
-func (p CPUProbe) Measure() (*Measurement, error) {
+func (p CPUProbe) Measure() (Measurement, error) {
 	v, err := cpu.Percent(0, false)
 	if err != nil {
-		return nil, err
+		return Measurement{}, err
 	}
 	return NewMeasurement(p.Resource(), v[0]), nil
 }

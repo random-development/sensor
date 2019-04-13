@@ -24,6 +24,7 @@ type WebSocketPublisherTestSuite struct {
 
 func (suite *WebSocketPublisherTestSuite) SetupTest() {
 	suite.mockCtrl = gomock.NewController(suite.T())
+	suite.topic = "topic"
 	suite.url = "ws://websocket/endpoint"
 	suite.sut = buildPublisher(suite)
 }
