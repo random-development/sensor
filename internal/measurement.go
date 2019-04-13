@@ -7,9 +7,9 @@ import (
 
 // Measurement is a struct sent between collectors and publishers
 type Measurement struct {
-	Resource string
-	Time     int64
-	Value    float64
+	Resource string  `json:"-"`
+	Time     int64   `json:"time"`
+	Value    float64 `json:"value"`
 }
 
 // NewMeasurement creates measurement with current time

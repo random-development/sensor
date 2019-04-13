@@ -1,5 +1,7 @@
 package internal
 
+//go:generate mockgen -destination=../mocks/probe_mock.go -package=mocks github.com/random-development/sensor/internal Probe
+
 import (
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"

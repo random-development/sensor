@@ -4,11 +4,12 @@ run:
 build:
 	go build -o sensor cmd/main.go
 
-test: mocks
+test:
 	go test -v ./internal
 
 mocks:
 	@ echo -- Generating mocks
+	rm -rf mocks
 	mkdir -p mocks
 	go generate ./internal
 
