@@ -26,6 +26,12 @@
   version = "v1.2.4"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/golang/glog"
+  packages = ["."]
+  revision = "23def4e6c14b4da8ac2ed8007337bc5eb5007998"
+
+[[projects]]
   name = "github.com/golang/mock"
   packages = ["gomock"]
   revision = "51421b967af1f557f93a59e0057aaf15ca02e29c"
@@ -64,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "89e6aa59dad123f1dedd0f6079f704ae20b094970af36fb7da3d95525c3cd14a"
+  inputs-digest = "fedd334255679533700e807521318cd317aba4ed018ba686b6f5316a46560dcc"
   solver-name = "gps-cdcl"
   solver-version = 1
