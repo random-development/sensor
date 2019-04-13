@@ -25,7 +25,7 @@ func (c *Collector) Run(interval time.Duration) {
 		for range time.Tick(interval) {
 			m, err := c.probe.Measure()
 			if err != nil {
-				log.Warnf("Failed to collect %s", c.probe.MetricName()())
+				log.Warnf("Failed to collect %s", c.probe.MetricName())
 			}
 			c.broker.Pub(m, c.probe.MetricName())
 			log.Debugf("Sent measurement to broker: %s", m.String())

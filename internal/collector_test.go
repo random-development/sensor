@@ -19,8 +19,8 @@ func TestCollectorRun(t *testing.T) {
 	m := internal.Measurement{}
 	r := "resource"
 	probe.EXPECT().MetricName().AnyTimes().Return(r)
-	probe.EXPECT().Measure().Times(5).Return(m, nil)
-	broker.EXPECT().Pub(m, r).Times(5)
+	probe.EXPECT().Measure().MinTimes(5).Return(m, nil)
+	broker.EXPECT().Pub(m, r).MinTimes(5)
 
 	timer := time.NewTimer(time.Microsecond)
 	sut.Run(5 * time.Microsecond)

@@ -1,5 +1,7 @@
 package internal
 
+//go:generate mockgen -destination=../mocks/publisher_mock.go -package=mocks github.com/random-development/sensor/internal Publisher
+
 import (
 	"reflect"
 
@@ -13,7 +15,7 @@ type Publisher interface {
 
 // RunPublisher starts goroutine which will receive measurements of one metric
 // and publish them
-func RunPublisher(topic string, p Publisher, b Broker, done chan struct{}) {
+func RunPublisher(topic string, p Publisher, b Broker, done chan bool) {
 	measCh := b.Sub(topic)
 	l := log.WithFields(logrus.Fields{
 		"publisher": reflect.TypeOf(p).Name(),

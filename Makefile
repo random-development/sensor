@@ -5,7 +5,7 @@ build:
 	go build -o sensor cmd/main.go
 
 test:
-	go test -v ./internal
+	go test ./internal
 
 mocks:
 	@ echo -- Generating mocks

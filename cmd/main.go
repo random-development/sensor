@@ -13,7 +13,7 @@ import (
 
 func main() {
 	psBroker := pubsub.New(0)
-	done := make(chan struct{})
+	done := make(chan bool)
 
 	// spawn collectors and run their goroutines
 	memCollector := internal.MakeCollector(internal.MemProbe{}, psBroker)
@@ -30,7 +30,7 @@ func main() {
 	go func() {
 		<-interruptCh
 		fmt.Println("Interrupt received, cleaning up")
-		close(done)
+		done <- true
 	}()
 	<-done
 
