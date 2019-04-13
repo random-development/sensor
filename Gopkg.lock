@@ -26,12 +26,6 @@
   version = "v1.2.4"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/golang/glog"
-  packages = ["."]
-  revision = "23def4e6c14b4da8ac2ed8007337bc5eb5007998"
-
-[[projects]]
   name = "github.com/golang/mock"
   packages = ["gomock"]
   revision = "51421b967af1f557f93a59e0057aaf15ca02e29c"
@@ -44,6 +38,12 @@
   version = "v1.4.0"
 
 [[projects]]
+  name = "github.com/konsorten/go-windows-terminal-sequences"
+  packages = ["."]
+  revision = "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e"
+  version = "v1.0.2"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -54,6 +54,12 @@
   packages = ["cpu","internal/common","mem"]
   revision = "2cbc9195c892b304060269ef280375236d2fcac9"
   version = "v2.19.03"
+
+[[projects]]
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
+  version = "v1.4.1"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -70,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fedd334255679533700e807521318cd317aba4ed018ba686b6f5316a46560dcc"
+  inputs-digest = "d95ad226dda3785402bb05dcb483c5ee8953b724eaf937571625e499df5608cb"
   solver-name = "gps-cdcl"
   solver-version = 1

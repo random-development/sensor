@@ -3,7 +3,6 @@ package internal
 //go:generate mockgen -destination=../mocks/websocket_publisher_mock.go -package=mocks github.com/random-development/sensor/internal Conn,Dialer
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -34,7 +33,7 @@ func (d DialerWrapper) Dial(url string, requestHeader http.Header) (Conn, *http.
 func MakeWebSocketPublisher(url string, dialer Dialer) (WebSocketPublisher, error) {
 	conn, _, err := dialer.Dial(url, nil)
 	if err != nil {
-		fmt.Printf("Error dialing to %s: %v", url, err)
+		log.Errorf("Error dialing to %s: %v", url, err)
 		return WebSocketPublisher{}, err
 	}
 
@@ -43,9 +42,9 @@ func MakeWebSocketPublisher(url string, dialer Dialer) (WebSocketPublisher, erro
 
 // Publish sends JSON message with Measurement via WebSocket
 func (p WebSocketPublisher) Publish(m Measurement) error {
-	fmt.Printf("Publishing via WebSocket: %s\n", m.String())
+	log.Debugf("Publishing via WebSocket: %s", m.String())
 	if err := p.conn.WriteJSON(m); err != nil {
-		fmt.Printf("Couldn't publish measurement: %v\n", err)
+		log.Errorf("Couldn't publish measurement: %v", err)
 		return err
 	}
 

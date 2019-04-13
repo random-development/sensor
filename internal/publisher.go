@@ -1,8 +1,12 @@
 package internal
 
-import "fmt"
+import (
+	"reflect"
 
-// Publisher receives measurements and publishes them to a specific sink
+	"github.com/sirupsen/logrus"
+)
+
+// Publisher receives measurements and publishes them somewhere
 type Publisher interface {
 	Publish(Measurement) error
 }
@@ -11,7 +15,12 @@ type Publisher interface {
 // and publish them
 func RunPublisher(topic string, p Publisher, b Broker, done chan struct{}) {
 	measCh := b.Sub(topic)
+	l := log.WithFields(logrus.Fields{
+		"publisher": reflect.TypeOf(p).Name(),
+		"resource":  topic,
+	})
 	go func() {
+		l.Info("Started")
 		for {
 			select {
 			case m := <-measCh:
@@ -19,10 +28,10 @@ func RunPublisher(topic string, p Publisher, b Broker, done chan struct{}) {
 				case Measurement:
 					p.Publish(meas)
 				default:
-					fmt.Println("Unknown type received")
+					l.Debug("Unknown type received")
 				}
 			case <-done:
-				fmt.Println("Done")
+				l.Info("Done")
 				return
 			}
 		}

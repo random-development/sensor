@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -22,13 +21,14 @@ func MakeCollector(p Probe, broker Broker) Collector {
 // Run starts a goroutine collecting measurements
 func (c *Collector) Run(interval time.Duration) {
 	go func() {
-		fmt.Printf("Starting Collector with Probe(%s)\n", c.probe.Resource())
+		log.Infof("Starting %s collector", c.probe.Resource())
 		for range time.Tick(interval) {
 			m, err := c.probe.Measure()
 			if err != nil {
-				fmt.Printf("Failed to collect %s\n", c.probe.Resource())
+				log.Warnf("Failed to collect %s", c.probe.Resource())
 			}
 			c.broker.Pub(*m, c.probe.Resource())
+			log.Debugf("Sent measurement to broker: %s", m.String())
 		}
 	}()
 }
