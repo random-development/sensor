@@ -1,0 +1,17 @@
+dist: xenial
+language: go
+
+go:
+  - "1.12"
+
+git:
+  depth: 1
+
+install: true
+
+before_script:
+  - make init
+
+script:
+  - make build
+  - make test
