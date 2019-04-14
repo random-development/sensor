@@ -17,3 +17,6 @@ mocks
 
 # Build output
 sensor
+
+# Dependencies
+vendor
