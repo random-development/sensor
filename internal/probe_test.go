@@ -9,12 +9,10 @@ import (
 	"github.com/random-development/sensor/mocks"
 )
 
-func TestCollectorRun(t *testing.T) {
+func TestProbeRun(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	probe := mocks.NewMockProbe(mockCtrl)
 	broker := mocks.NewMockBroker(mockCtrl)
-
-	sut := internal.MakeCollector(probe, broker)
 
 	m := internal.Measurement{}
 	r := "resource"
@@ -23,6 +21,6 @@ func TestCollectorRun(t *testing.T) {
 	broker.EXPECT().Pub(m, r).MinTimes(5)
 
 	timer := time.NewTimer(time.Microsecond)
-	sut.Run(5 * time.Microsecond)
+	internal.RunProbe(probe, broker, 5*time.Microsecond)
 	<-timer.C
 }

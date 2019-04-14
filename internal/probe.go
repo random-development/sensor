@@ -3,8 +3,7 @@ package internal
 //go:generate mockgen -destination=../mocks/probe_mock.go -package=mocks github.com/random-development/sensor/internal Probe
 
 import (
-	"github.com/shirou/gopsutil/cpu"
-	"github.com/shirou/gopsutil/mem"
+	"time"
 )
 
 // Probe represents a single metric and a way in which it may be gathered
@@ -13,32 +12,17 @@ type Probe interface {
 	Measure() (Measurement, error)
 }
 
-// MemProbe allows to measure memory usage
-type MemProbe struct{}
-
-// MetricName describes probe
-func (p MemProbe) MetricName() string { return "memory" }
-
-// Measure is used to collect one measurement
-func (p MemProbe) Measure() (Measurement, error) {
-	v, err := mem.VirtualMemory()
-	if err != nil {
-		return Measurement{}, err
-	}
-	return NewMeasurement(p.MetricName(), v.UsedPercent), nil
-}
-
-// CPUProbe allows to measure CPU usage
-type CPUProbe struct{}
-
-// MetricName describes probe
-func (p CPUProbe) MetricName() string { return "cpu" }
-
-// Measure is used to collect one measurement
-func (p CPUProbe) Measure() (Measurement, error) {
-	v, err := cpu.Percent(0, false)
-	if err != nil {
-		return Measurement{}, err
-	}
-	return NewMeasurement(p.MetricName(), v[0]), nil
+// RunProbe starts a goroutine collecting measurements
+func RunProbe(probe Probe, broker Broker, interval time.Duration) {
+	go func() {
+		log.Infof("Starting %s collector", probe.MetricName())
+		for range time.Tick(interval) {
+			m, err := probe.Measure()
+			if err != nil {
+				log.Warnf("Failed to collect %s", probe.MetricName())
+			}
+			broker.Pub(m, probe.MetricName())
+			log.Debugf("Sent measurement to broker: %s", m.String())
+		}
+	}()
 }
