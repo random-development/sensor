@@ -17,7 +17,7 @@ type Publisher interface {
 // and publish them
 func RunPublisher(topic string, p Publisher, b Broker, done chan bool) {
 	measCh := b.Sub(topic)
-	l := log.WithFields(logrus.Fields{
+	l := Log.WithFields(logrus.Fields{
 		"publisher": reflect.TypeOf(p).Name(),
 		"metric":    topic,
 	})

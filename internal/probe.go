@@ -15,14 +15,14 @@ type Probe interface {
 // RunProbe starts a goroutine collecting measurements
 func RunProbe(probe Probe, broker Broker, interval time.Duration) {
 	go func() {
-		log.Infof("Starting %s collector", probe.MetricName())
+		Log.Infof("Starting %s collector", probe.MetricName())
 		for range time.Tick(interval) {
 			m, err := probe.Measure()
 			if err != nil {
-				log.Warnf("Failed to collect %s", probe.MetricName())
+				Log.Warnf("Failed to collect %s", probe.MetricName())
 			}
 			broker.Pub(m, probe.MetricName())
-			log.Debugf("Sent measurement to broker: %s", m.String())
+			Log.Debugf("Sent measurement to broker: %s", m.String())
 		}
 	}()
 }

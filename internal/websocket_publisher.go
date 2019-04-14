@@ -38,7 +38,7 @@ func (d DialerWrapper) Dial(url string, requestHeader http.Header) (Conn, *http.
 func MakeWebSocketPublisher(url string, dialer Dialer) (WebSocketPublisher, error) {
 	conn, _, err := dialer.Dial(url, nil)
 	if err != nil {
-		log.Errorf("Error dialing to %s: %v", url, err)
+		Log.Errorf("Error dialing to %s: %v", url, err)
 		return WebSocketPublisher{}, err
 	}
 
@@ -47,9 +47,9 @@ func MakeWebSocketPublisher(url string, dialer Dialer) (WebSocketPublisher, erro
 
 // Publish sends JSON message with Measurement via WebSocket
 func (p WebSocketPublisher) Publish(m Measurement) error {
-	log.Debugf("Publishing via WebSocket: %s", m.String())
+	Log.Debugf("Publishing via WebSocket: %s", m.String())
 	if err := p.conn.WriteJSON(m); err != nil {
-		log.Errorf("Couldn't publish measurement: %v", err)
+		Log.Errorf("Couldn't publish measurement: %v", err)
 		return err
 	}
 

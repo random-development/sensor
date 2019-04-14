@@ -21,5 +21,5 @@ func NewMeasurement(resource string, value float64) Measurement {
 }
 
 func (m Measurement) String() string {
-	return fmt.Sprintf("[%d]: %s=%f", m.Time, m.Resource, m.Value)
+	return fmt.Sprintf("[%d] %s=%f", m.Time, m.Resource, m.Value)
 }
