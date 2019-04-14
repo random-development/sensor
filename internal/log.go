@@ -6,10 +6,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var log logrus.Logger
+// Log is used as global logger
+var Log logrus.Logger
 
 func init() {
-	log = logrus.Logger{
+	Log = logrus.Logger{
 		Out:       os.Stdout,
 		Formatter: &logrus.TextFormatter{},
 		Level:     logrus.DebugLevel,
