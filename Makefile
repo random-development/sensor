@@ -24,6 +24,7 @@ mocks: mockgen
 
 mockgen:
 	@ echo -- Installing mockgen tool
+	go get github.com/golang/mock/gomock
 	go install github.com/golang/mock/mockgen
 
 build_docker:
