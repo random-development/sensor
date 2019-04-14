@@ -13,18 +13,23 @@ type WebSocketPublisher struct {
 	conn Conn
 }
 
+// Dialer is used to perform WebSocket dial operation
 type Dialer interface {
 	Dial(url string, requestHeader http.Header) (Conn, *http.Response, error)
 }
 
+// Conn represents WebSocket connection
 type Conn interface {
 	WriteJSON(m interface{}) error
 }
 
+// DialerWrapper adapts gorilla.websocket.Dialer to internal interface
 type DialerWrapper struct {
 	Dialer *websocket.Dialer
 }
 
+// Dial wraps dialer implementation call so the returned Conn interaface is the internal one,
+// not the websocket.Conn
 func (d DialerWrapper) Dial(url string, requestHeader http.Header) (Conn, *http.Response, error) {
 	return d.Dialer.Dial(url, requestHeader)
 }

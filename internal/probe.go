@@ -7,7 +7,7 @@ import (
 	"github.com/shirou/gopsutil/mem"
 )
 
-// Probe is
+// Probe represents a single metric and a way in which it may be gathered
 type Probe interface {
 	MetricName() string
 	Measure() (Measurement, error)
