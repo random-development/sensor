@@ -14,7 +14,10 @@ run:
 test:
 	go test ./internal
 
-init: mocks
+init: deps mocks
+
+deps:
+	dep ensure
 
 mocks: mockgen
 	@ echo -- Generating mocks
