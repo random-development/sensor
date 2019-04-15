@@ -7,6 +7,9 @@ go:
 git:
   depth: 1
 
+before_install:
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+
 install: true
 
 before_script:
