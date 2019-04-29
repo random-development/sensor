@@ -35,6 +35,9 @@ func runPublishers(config sensor.Config, broker sensor.Broker, done chan bool) {
 		"websocket": func(c sensor.PublisherConfig, name, t string) (sensor.Publisher, error) {
 			url := c.URL + "/resource/" + name + "/metrics/" + t + "/measurements"
 			return sensor.MakeWebSocketPublisher(url, sensor.DialerWrapper{Dialer: websocket.DefaultDialer})
+        },
+		"websocket_demo": func(c sensor.PublisherConfig, name, t string) (sensor.Publisher, error) {
+			return sensor.MakeWebSocketPublisher(c.URL, sensor.DialerWrapper{Dialer: websocket.DefaultDialer})
 		},
 	}
 
