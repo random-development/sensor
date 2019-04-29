@@ -25,7 +25,7 @@ mockgen:
 	go install github.com/golang/mock/mockgen
 
 build_docker:
-	docker build -t czeslavo/sensor:${APP_IMAGE_TAG} .
+	docker build -t czeslavo/sensor:${APP_IMAGE_TAG}
 
 publish_docker:
 	docker push czeslavo/sensor:${APP_IMAGE_TAG}

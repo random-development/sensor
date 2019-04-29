@@ -1,7 +1,8 @@
 FROM golang:1.12 as BUILD_STAGE
 WORKDIR /app
 COPY . .
-RUN make init
+RUN make mocks && \
+    make test
 RUN make build
 
 FROM alpine:3.9
