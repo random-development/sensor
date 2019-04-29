@@ -2,7 +2,7 @@ GOLANG_IMAGE=golang-alpine:1.12
 APP_DIR=/go/src/github.com/random-development/sensor
 RUN_IN_DOCKER_CMD=docker run -it -v ${PWD}:${APP_DIR} -w ${APP_DIR} ${GOLANG_IMAGE}
 APP_IMAGE_TAG?=latest
-GOOS?=linux 
+GOOS?=linux
 GOARCH?=amd64
 
 build:
@@ -14,11 +14,6 @@ run:
 test:
 	go test ./internal
 
-init: deps mocks
-
-deps:
-	dep ensure
-
 mocks: mockgen
 	@ echo -- Generating mocks
 	@ rm -rf mocks
@@ -27,7 +22,6 @@ mocks: mockgen
 
 mockgen:
 	@ echo -- Installing mockgen tool
-	go get github.com/golang/mock/gomock
 	go install github.com/golang/mock/mockgen
 
 build_docker:
@@ -36,4 +30,4 @@ build_docker:
 publish_docker:
 	docker push czeslavo/sensor:${APP_IMAGE_TAG}
 
-.PHONY: run build test mocks init mockgen build_docker publish_docker 
+.PHONY: run build test mocks mockgen build_docker publish_docker

@@ -7,14 +7,11 @@ go:
 git:
   depth: 1
 
-before_install:
-  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-
 install: true
 
 before_script:
-  - env GO111MODULE=on make init
+  - env GO111MODULE=on make mocks
 
 script:
-  - make build
-  - make test
+  - env GO111MODULE=on make build
+  - env GO111MODULE=on make test
