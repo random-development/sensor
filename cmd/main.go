@@ -11,41 +11,42 @@ import (
 )
 
 func runProbes(config sensor.Config, broker sensor.Broker) {
-	type probeFactory func() sensor.Probe
+	type factory func() sensor.Probe
 
-	var probeFactories = map[string]probeFactory{
+	var factories = map[string]factory{
 		"memory": func() sensor.Probe { return sensor.MemProbe{} },
 		"cpu":    func() sensor.Probe { return sensor.CPUProbe{} },
 	}
 
 	for _, probeConfig := range config.Probes {
-		probeFactory, ok := probeFactories[probeConfig.Type]
+		factory, ok := factories[probeConfig.Type]
 		if !ok {
 			sensor.Log.Errorf("Couldn't find factory for probe type: %s", probeConfig.Type)
 			continue
 		}
-		sensor.RunProbe(probeFactory(), broker, time.Duration(probeConfig.Interval)*time.Second)
+		sensor.RunProbe(factory(), broker, time.Duration(probeConfig.Interval)*time.Second)
 	}
 }
 
 func runPublishers(config sensor.Config, broker sensor.Broker, done chan bool) {
-	type publisherFactory func(sensor.PublisherConfig) (sensor.Publisher, error)
+	type factory func(sensor.PublisherConfig, string, string) (sensor.Publisher, error)
 
-	var publisherFactories = map[string]publisherFactory{
-		"websocket": func(c sensor.PublisherConfig) (sensor.Publisher, error) {
-			return sensor.MakeWebSocketPublisher(c.URL, sensor.DialerWrapper{Dialer: websocket.DefaultDialer})
+	var factories = map[string]factory{
+		"websocket": func(c sensor.PublisherConfig, name, t string) (sensor.Publisher, error) {
+			url := c.URL + "/resource/" + name + "/metrics/" + t + "/measurements"
+			return sensor.MakeWebSocketPublisher(url, sensor.DialerWrapper{Dialer: websocket.DefaultDialer})
 		},
 	}
 
 	for _, publisherConfig := range config.Publishers {
-		factory, ok := publisherFactories[publisherConfig.Type]
+		factory, ok := factories[publisherConfig.Type]
 		if !ok {
 			sensor.Log.Errorf("Couldn't find factory for publisher: %s", publisherConfig.Type)
 			continue
 		}
 
 		for _, probeConfig := range config.Probes {
-			publisher, err := factory(publisherConfig)
+			publisher, err := factory(publisherConfig, config.Name, probeConfig.Type)
 			if err != nil {
 				sensor.Log.Errorf("Couldn't build publisher %s, %s", publisherConfig.Type, err)
 				continue
