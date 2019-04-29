@@ -4,6 +4,7 @@ package internal
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gorilla/websocket"
 )
@@ -36,13 +37,16 @@ func (d DialerWrapper) Dial(url string, requestHeader http.Header) (Conn, *http.
 
 // MakeWebSocketPublisher builds WebSocketPublisher
 func MakeWebSocketPublisher(url string, dialer Dialer) (WebSocketPublisher, error) {
-	conn, _, err := dialer.Dial(url, nil)
-	if err != nil {
-		Log.Errorf("Error dialing to %s: %v", url, err)
-		return WebSocketPublisher{}, err
-	}
+	for {
+		conn, _, err := dialer.Dial(url, nil)
 
-	return WebSocketPublisher{conn}, nil
+		if err == nil {
+			return WebSocketPublisher{conn}, nil
+		} else {
+			Log.Warnf("Couldn't connect to %s, %v, retrying in 5s", url, err)
+			time.Sleep(5 * time.Second)
+		}
+	}
 }
 
 // Publish sends JSON message with Measurement via WebSocket
