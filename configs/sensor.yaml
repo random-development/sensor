@@ -5,5 +5,5 @@ probes:
   - type: cpu
     interval: 20
 publishers:
-  - type: websocket
+  - type: websocket_demo
     url: ws://demos.kaazing.com/echo
