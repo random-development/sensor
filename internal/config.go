@@ -2,6 +2,7 @@ package internal
 
 import (
 	"flag"
+	"path"
 
 	"github.com/spf13/viper"
 )
@@ -38,10 +39,12 @@ type PublisherConfig struct {
 // 	- type: websocket
 // 	  url: ws://demos.kaazing.com/echo
 func ReadConfig() Config {
-	configPath := flag.String("config", ".", "directory from which config.yaml will be read")
+	configFile := flag.String("config", ".", "config file path")
 	flag.Parse()
-	viper.SetConfigName("sensor")
-	viper.AddConfigPath(*configPath)
+	p := path.Dir(*configFile)
+	n := path.Base(*configFile)
+	viper.SetConfigName(n)
+	viper.AddConfigPath(p)
 
 	if err := viper.ReadInConfig(); err != nil {
 		Log.Fatalf("Error reading config file, %v", err)

@@ -1,0 +1,9 @@
+name: resource-2
+probes:
+  - type: memory
+    interval: 5
+  - type: cpu
+    interval: 10
+publishers:
+  - type: websocket
+    url: ws://monitor:8080/

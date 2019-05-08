@@ -9,7 +9,7 @@ build:
 	go build -o sensor cmd/main.go
 
 run:
-	go run cmd/main.go -config ./configs/
+	go run cmd/main.go -config ./configs/sensor_demo
 
 test:
 	go test ./internal

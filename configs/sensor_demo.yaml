@@ -1,0 +1,9 @@
+name: resource-1
+probes:
+  - type: memory
+    interval: 10
+  - type: cpu
+    interval: 20
+publishers:
+  - type: websocket_demo
+    url: wss://echo.websocket.org
