@@ -1,9 +1,9 @@
-name: resource-3
+name: resource-4
 probes:
   - type: memory
     interval: 10
   - type: cpu
-    interval: 30
+    interval: 20
 publishers:
   - type: websocket
-    url: ws://monitor1:8080/
+    url: ws://monitor2:8080/

@@ -6,4 +6,4 @@ probes:
     interval: 20
 publishers:
   - type: websocket
-    url: ws://monitor:8080/
+    url: ws://monitor1:8080/
